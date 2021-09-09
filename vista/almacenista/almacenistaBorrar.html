@@ -1,0 +1,105 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<script type="text/javascript"
+        src="{{ .hosting }}static/js/jspanel.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/jspanel.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <h3 class="" style="color: white; background-color: #21B799;
+                     width: 270px; text-align: center; border-radius: 1px">Borrar Almacenista</h3>
+                <br>
+                <form id="formulario" method="POST"
+                      action="/AlmacenistaEliminar/{{ .emp.Codigo }}">
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-1 col-form-label">Codigo</label>
+                        <div class="col-sm-1">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Codigo }}"
+                                       name="Codigo"
+                                       id="Codigo"
+                                       minlength="1"
+                                       maxlength="2"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Nit.
+                            No.</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Nit }}"
+                                       name="Nit"
+                                       id="Nit"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                        <!-- <label for="campo2" class="col-sm-1 col-form-label">Dv</label>-->
+                        <div class="col-sm-1">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Dv }}"
+                                       name="Dv"
+                                       id="Dv" class="form-control"
+                                       readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Nombre</label>
+                        <div class="col-sm-5">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Nombre }}"
+                                       name="Nombre"
+                                       id="Nombre"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <div class="col-sm-12">
+                            <a onclick="window.history.go(-1); return false;"
+                               class="btn btn-outline-dark waves-effect btn-md float-right">Cancelar </a>
+                            <button type="submit"
+                                    class="btn btn-outline-success waves-effect btn-md float-right">
+                                Borrar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--INICIA CREAR NUEVO-->
+<input id="TerceroNuevo"
+       type="hidden"/>
+<!--TERMINA CREAR NUEVO -->
+
+<script>
+    $(document).ready(function () {
+        //INICIA MASCARAS
+        $("#Nit").mask('000.000.000.000', {reverse: true});
+        $("#Dv").mask('0', {reverse: true});
+        //TERMINA MASCARAS
+
+        //INICIA FOCUS
+        $('#Nit').focus();
+        //TERMINA FOCUS
+
+        //INICIA SELECT
+        $('.mdb-select').materialSelect({});
+        //TERMINA SELECT
+    });
+    <!--INICIA CREAR NUEVO-->
+    <input id="TerceroNuevo"
+           type="hidden"/>
+    <!--TERMINA CREAR NUEVO -->
+
+    <script>
+
+        {{end}}

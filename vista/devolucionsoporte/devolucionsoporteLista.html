@@ -1,0 +1,148 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/datatable.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/tabla.css"/>
+<div class="container-fluid">
+    <section>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <br>
+                    <h3 class="" style="color: white; background-color: #21B799;
+                     width: 400px; text-align: center; border-radius: 1px">Listado de Devolucion Soporte</h3>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home"
+                             role="tabpanel" aria-labelledby="home-tab">
+                            <a href="/DevolucionsoporteNuevo/False"
+                               class="btn btn-outline-success waves-effect btn-md float-right">Nuevo</a>
+                            <table id="dt-all-checkbox"
+                                   class="table table-borderless table-striped table-sm"
+                                   cellspacing="0" width="100%">
+                                <thead style="color: white; background-color: #21B799">
+                                <tr>
+                                    <th>Filas</th>
+                                    <th>Factura No.</th>
+                                    <th>Fecha</th>
+                                    <th>Proveedor</th>
+                                    <th>Nombre</th>
+                                    <th>Almacenista</th>
+                                    <th>Total</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{ range .res }}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ .Codigo }}</td>
+                                    <td>{{ .Fecha.Format "02/01/2006" }}</td>
+                                    <td>{{ .Tercero }}</td>
+                                    <td>{{ .TerceroNombre }}</td>
+                                    <td>{{ .AlmacenistaNombre }}</td>
+                                    <td>{{ .Neto }}</td>
+                                    <td>
+                                        <a href="/DevolucionsoporteEditar/{{ .Codigo }}"
+                                           class="teal-text pl-3"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           title="Editar"><i
+                                                class="fas fa-pencil-alt"></i></a>
+                                        <a target="_blank"
+                                           href="/DevolucionsoportePdf/{{ .Codigo }}"
+                                           class="blue-text pl-3"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           title="See results"><i
+                                                class="fas fa-user"></i></a>
+                                        <a href="/DevolucionsoporteBorrar/{{ .Codigo }}"
+                                           class="red-text pl-3"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           title="Eliminar"><i
+                                                class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                {{ end }}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    numeroPanel = 1;
+    $(document).ready(function () {
+        $('#dt-all-checkbox').dataTable({
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "scrollXInner": true,
+            "paging": false,
+            columns:
+                [{"data": "Filas"},
+                    {"data": "Codigo"},
+                    {"data": "Fecha"},
+                    {
+                        "data": "Tercero",
+                        render: $.fn.dataTable.render.number(',', '.', 0, '')
+                    },
+                    {"data": "Nombre"},
+                    {"data": "AlmacenistaNombre"},
+                    {"data": "Neto", className: "text-right"},
+                    {"data": "Acciones", className: "text-center"},
+                ],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox select-checkbox-all',
+                targets: 0
+            }],
+            "ordering" : false,
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            }
+        });
+
+        $('#dt-all-checkbox').DataTable();
+        $('#dt-all-checkbox_wrapper').find('label').each(function () {
+            $(this).parent().append($(this).children());
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('input').each(function () {
+            const $this = $(this);
+            $this.attr("placeholder", "Buscar");
+            $this.removeClass('form-control-sm');
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_length').addClass('d-flex flex-row');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').addClass('md-form');
+        $('#dt-all-checkbox_wrapper select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        $('#dt-all-checkbox_wrapper select').addClass('mdb-select');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('label').remove();
+        $('.mdb-select').materialSelect({});
+
+    });
+
+</script>
+
+{{end}}

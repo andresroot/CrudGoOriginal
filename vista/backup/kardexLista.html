@@ -1,0 +1,325 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/datatable.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/tabla.css"/>
+<div class="container-fluid">
+    <section>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <br>
+                    <div class="form-group row mb-4 mt-0 ml-3 ">
+                         <h3 class="card-title" class="" style="color: white; background-color: #21B799;
+                     width: 270px; text-align: center; border-radius: 1px">Copia de Seguridad</h3>
+                        <div class="col-sm-2"></div>
+                            <div class="col-sm-2">
+                                <button type="button" id="pdf"
+                                    class="btn btn-outline-danger waves-effect btn-md float-right">
+                                Pdf
+                                </button>
+                            </div>
+                        <div class="col-sm-2">
+                            <button type="button" id="excel"
+                                    class="btn btn-outline-info waves-effect btn-md float-right">
+                                Excel
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" id="actualizar"
+                                    class="btn btn-outline-success waves-effect btn-md float-right">
+                                Previa
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home"
+                             role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Producto</label>
+                                <div class="col-sm-2">
+                                    <select name="Producto"
+                                            id="Producto"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        <option value="Todos">Todos
+                                        </option>
+                                        {{ range .producto }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}
+                                        </option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Desde</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               placeholder="DD/mm/YYYY"
+                                               name="FechaInicial"
+                                               id="FechaInicial"
+                                               class="form-control"
+                                               required/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Hasta</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               placeholder="DD/mm/YYYY"
+                                               name="FechaFinal"
+                                               id="FechaFinal"
+                                               class="form-control"
+                                               required/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Bodega</label>
+                                <div class="col-sm-2">
+                                    <select name="Bodega"
+                                            id="Bodega"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        <option value="Todas">Todas
+                                        </option>
+
+                                        {{ range .bodega }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}
+                                        </option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-4 mt-0">
+                                <label class="col-sm-1 col-form-label">Tipo</label>
+                                <div class="col-sm-2">
+                                    <select name="Tipo"
+                                            id="Tipo"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        <option value="Todos">Todos</option>
+                                        <option value="1">Inventario Inicial</option>
+                                        <option value="2">Compras</option>
+                                        <option value="3">Documento Soporte</option>
+                                        <option value="4">Devoluciones en Ventas</option>
+                                        <option value="5">Traslado Entrada</option>
+                                        <option value="6">Devolucion en Compras</option>
+                                        <option value="7">Devolucion Soporte</option>
+                                        <option value="8">Ventas</option>
+                                        <option value="9">Traslado Salida</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Discrimina</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <select name="Discriminar" id="Discriminar"
+                                                class=" mdb-select md-form-control"
+                                                editable="true">
+                                            <option value="NO">NO</option>
+                                            <option value="SI">SI</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <table id="dt-all-checkbox"
+                                   class="table table-borderless table-striped table-sm"
+                                   cellspacing="0" width="100%">
+                                <thead style="color: white; background-color: #21B799">
+                                <tr>
+                                    <th>Filas
+                                    </th>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Tipo</th>
+                                    <th>Documento</th>
+                                    <th>Bodega</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>TotalE</th>
+                                    <th>CantidadE</th>
+                                    <th>PrecioE</th>
+                                    <th>Total</th>
+                                    <th>CantidadT</th>
+                                    <th>PrecioT</th>
+                                    <th>TotalT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    numeroPanel = 1;
+    $(document).ready(function () {
+        // INICIA FECHA
+        var m = moment().format("YYYY-MM-DD");
+        $("#FechaInicial").val(m);
+        $("#FechaFinal").val(m);
+
+        $( "#actualizar" ).click(function() {
+            //alert( "actualizar" );
+            Producto=$("#Producto").val();
+            FechaInicial=$("#FechaInicial").val();
+            FechaFinal=$("#FechaFinal").val();
+            Bodega=$("#Bodega").val();
+            Tipo=$("#Tipo").val();
+            Discriminar=$("#Discriminar").val();
+
+            var accion="";
+
+        if (Producto=="Todos")
+        {
+            accion='KardexDatosTodos/'+FechaInicial+"/"+FechaFinal+"/"+Bodega+"/"+Tipo+"/"+Discriminar;
+        }
+        else
+        {
+            accion='KardexDatos/'+Producto+"/"+FechaInicial+"/"+FechaFinal+"/"+Bodega+"/"+Tipo+"/"+Discriminar;;
+        }
+            $.ajax({
+                url: accion,
+                dataType: "json",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                   // BindDataTable(response);
+                    console.log(JSON.stringify(response));
+                    datos(response);
+                    // datatable.clear();
+                    // datatable.rows.add(response);
+                    // datatable.draw();
+                }
+
+            })
+
+
+        });
+
+
+            $('.mdb-select').materialSelect({});
+    });
+    function datos(datosAjax)
+    {
+      Producto=$("#Producto").val();
+      FechaInicial=$("#FechaInicial").val();
+      FechaFinal=$("#FechaFinal").val();
+      Bodega=$("#Bodega").val();
+
+
+        $('#dt-all-checkbox').dataTable().fnDestroy();
+        var datatable1=   $('#dt-all-checkbox').dataTable({
+            "dom": 'lrtip',
+            "scrollY": "412px",
+            "scrollCollapse": true,
+            "scrollXInner": true,
+            "paging": false,
+            "aaData": datosAjax,
+            columns:
+                [{"data": "Filas"},
+                    {"data": "Fecha" },
+                    {"data": "Producto"},
+                    {"data": "Tipo"},
+                    {"data": "Documento"},
+                    {"data": "Bodega"},
+                    {
+                        "data": "CantidadE",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "PrecioE",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "TotalE",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Cantidad",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Precio",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Total",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "CantidadT",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "PrecioT",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "TotalT",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    }
+                ],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox select-checkbox-all',
+                targets: 0
+            }],
+            "ordering" : false,
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            }
+        });
+
+        $('#dt-all-checkbox').DataTable();
+        $('#dt-all-checkbox_wrapper').find('label').each(function () {
+            $(this).parent().append($(this).children());
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('input').each(function () {
+            const $this = $(this);
+            $this.attr("placeholder", "Buscar");
+            $this.removeClass('form-control-sm');
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_length').addClass('d-flex flex-row');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').addClass('md-form');
+        $('#dt-all-checkbox_wrapper select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        $('#dt-all-checkbox_wrapper select').addClass('mdb-select');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('label').remove();
+
+    }
+
+</script>
+
+{{end}}

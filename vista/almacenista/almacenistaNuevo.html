@@ -1,0 +1,240 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<script type="text/javascript"
+        src="{{ .hosting }}static/js/jspanel.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/jspanel.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <!--       INICIA AVISO CODIGO YA EXISTE-->
+        <div class="form-group row mb-0">
+            <div class="col-sm-3">
+                <div class="md-form mt-0">
+                    <div id="aviso"
+                         class="alert alert-success alert-dismissible"
+                         role="alert">
+                        <p id="textoaviso">Cargando...</p>
+                        <button
+                                type="button"
+                                class="close"
+                                data-dismiss="alert"
+                                aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--       TERMINA AVISO CODIGO YA EXISTE-->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="" style="color: white; background-color: #21B799;
+                     width: 270px; text-align: center; border-radius: 1px">Nuevo Almacenista</h3>
+                <br>
+                <form id="formulario" method="POST"
+                      action="/AlmacenistaInsertar">
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-1 col-form-label">Codigo</label>
+                        <div class="col-sm-1">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       name="Codigo"
+                                       id="Codigo"
+                                       minlength="1"
+                                       maxlength="2"
+                                       class="form-control" required/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Nit.
+                            No.</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+
+                                <input type="text" name="Nit"
+                                       id="Nit"
+                                       class="form-control" required/>
+                            </div>
+                        </div>
+                        <!--                        <label for="campo2" class="col-sm-1 col-form-label">Dv</label>-->
+                        <div class="col-sm-1">
+                            <div class="md-form mt-0">
+                                <input type="text" name="Dv"
+                                       id="Dv" class="form-control"
+                                       readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Nombre</label>
+                        <div class="col-sm-5">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       name="Nombre"
+                                       id="Nombre"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <div class="col-sm-12">
+                            <a onclick="window.history.go(-1); return false;"
+                               class="btn btn-outline-dark waves-effect btn-md float-right">Cancelar </a>
+                            <button type="submit"
+                                    id="guardar" class="btn btn-outline-success waves-effect btn-md float-right">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--INICIA CREAR NUEVO-->
+<input id="TerceroNuevo"
+       type="hidden"/>
+<!--TERMINA CREAR NUEVO -->
+
+<script>
+    // INICIA CERRAR PANEL
+    var numeroPanel = 1;
+
+    function cerrar() {
+        codigoElemento = $('#Codigo').val().replace('.', '');
+        elemento = '{{ .Elemento }}';
+        var myCustomData = {
+            valido: true,
+            codigoElemento: codigoElemento,
+            elementoPanel: elemento
+        }
+        var event = new CustomEvent('myEvent', {detail: myCustomData})
+        window.parent.document.dispatchEvent(event)
+    }
+
+    //TERMINA CERRAR PANEL
+
+    $(document).ready(function () {
+        //INICIA GUARDAR DATOS
+        function guardar() {
+            $("#formulario").submit();
+        }
+
+        //TERMINA GUARDAR DATOS
+
+        //INICIA MASCARAS
+        $("#Nit").mask('000.000.000.000', {reverse: true});
+        $("#Dv").mask('0', {reverse: true});
+        //TERMINA MASCARAS
+
+        //INICIA AVISOS
+        $("#aviso").hide();
+        $("#guardar").prop("disabled", false);
+        $("#guardar").prop("disabled", true);
+        //TERMINA AVISOS
+
+        //INICIA AUTOCOMPLETADO
+        autocompletaTercero('#Nit', '#Dv', '#Nombre');
+        //TERMINA AUTOCOMPLETADO TERCERO
+
+        //INICIA FOCUS
+        $('#Codigo').focus();
+        //TERMINA FOCUS
+
+        //INICIA SELECT
+        $('.mdb-select').materialSelect({});
+        //TERMINA SELECT
+
+    });
+
+    //INICIA EXISTE TERCERO
+    $('#Codigo').on('keyup focusout', function (event) {
+        if ($("#Codigo").val().length > 0) {
+            $("#Dv").val(calcularDigitoVerificacion($("#Codigo").val()));
+            console.log("Handler for .keyup() called." + $("#Codigo").val());
+            valor = $("#Codigo").val().replace(/\./g, '');
+            $.ajax({
+                url: "/AlmacenistaExiste/" + valor,
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (respuesta) {
+                    if (respuesta.result == true) {
+                        console.log(respuesta.result);
+                        $("#textoaviso").html("El codigo Ya Existe");
+                        $("#aviso").show();
+                        $("#guardar").prop("disabled", true);
+                    } else {
+                        console.log(respuesta.result);
+                        $("#aviso").hide();
+                        $("#guardar").prop("disabled", false);
+                    }
+                },
+            });
+        }
+    });
+    //TERMINA EXISTE TERCERO
+
+    //INICIA DIGITO DE VERIFICACION
+    function calcularDigitoVerificacion(myNit) {
+        var vpri,
+            x,
+            y,
+            z;
+        // LIMPIA EL NIT
+        myNit = myNit.replace(/\s/g, ""); // Espacios
+        myNit = myNit.replace(/,/g, ""); // Comas
+        myNit = myNit.replace(/\./g, ""); // Puntos
+        myNit = myNit.replace(/-/g, ""); // Guiones
+        // VALIDA NIT
+        if (isNaN(myNit)) {
+            console.log("El nit/cédula '" + myNit + "' no es válido(a).");
+            return "";
+        }
+        // PROCEDIMIENTO
+        vpri = new Array(16);
+        z = myNit.length;
+        vpri[1] = 3;
+        vpri[2] = 7;
+        vpri[3] = 13;
+        vpri[4] = 17;
+        vpri[5] = 19;
+        vpri[6] = 23;
+        vpri[7] = 29;
+        vpri[8] = 37;
+        vpri[9] = 41;
+        vpri[10] = 43;
+        vpri[11] = 47;
+        vpri[12] = 53;
+        vpri[13] = 59;
+        vpri[14] = 67;
+        vpri[15] = 71;
+        x = 0;
+        y = 0;
+        for (var i = 0; i < z; i++) {
+            y = (myNit.substr(i, 1));
+            // console.log ( y + "x" + vpri[z-i] + ":" ) ;
+            x += (y * vpri [z - i]);
+            // console.log ( x ) ;
+        }
+        y = x % 11;
+        // console.log ( y ) ;
+        return (y > 1) ? 11 - y : y;
+    }
+
+    // CALCULAR
+    function calcular() {
+        // VERIFICAR QUE HAYA NUMERO
+        let nit = document.getElementById("nit").value;
+        let isNitValid = nit >>> 0 === parseFloat(nit) ? true : false; // Validate a positive integer
+        // SI ES UN NUMERO SE CALCULA EL DIGITO DE VERIFICACION
+        if (isNitValid) {
+            let inputDigVerificacion = document.getElementById("digitoVerificacion");
+            inputDigVerificacion.value = calcularDigitoVerificacion(nit);
+        }
+    }
+
+    //TERMINA DIGITO DE VERIFICACION
+</script>
+
+{{template "autocompletaTercero" }}
+{{end}}

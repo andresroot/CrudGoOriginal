@@ -1,0 +1,31 @@
+.pagination .page-item.active .page-link {
+    color: #fff;
+    background-color: #28a745; !important;
+}
+
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #28a745; !important;
+    border-color: #007bff;
+}
+
+.page-link {
+
+    background-color: #ffffff !important;
+    border: 1px solid #dee2e6;
+}
+
+a {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.dataTables_scrollBody thead tr {
+    visibility: collapse;
+}
+
+.dataTables_scrollBody {
+    margin-top: -18px;
+}

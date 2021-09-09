@@ -1,0 +1,422 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<script type="text/javascript"
+        src="{{ .hosting }}static/js/jspanel.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/jspanel.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<script src="{{ .hosting }}static/js/cleave.js"></script>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="card">
+            <form id="formulario" method="POST"
+                  action="/ConfiguracioncontabilidadInsertar">
+                <input type="hidden" id="panel" name="panel"
+                       value="{{ .panel}}">
+                <div class="card-body">
+                    <h3 class="card-title">Configuracion Contabilidad</h3>
+                    <br>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab"
+                               data-toggle="tab" href="#pagos" role="tab"
+                               aria-controls="home"
+                               aria-selected="true">Pagos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab"
+                               data-toggle="tab" href="#general" role="tab"
+                               aria-controls="profile"
+                               aria-selected="false">General</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab"
+                               data-toggle="tab" href="#horizontal" role="tab"
+                               aria-controls="contact"
+                               aria-selected="false">Horizontal</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="pagos"
+                             role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Efectivo</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentaefectivo"
+                                               id  ="Pagocuentaefectivo"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombreefectivo"
+                                               id  ="Pagonombreefectivo"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Transferencia</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentaconsignacion"
+                                               id  ="Pagocuentaconsignacion"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombreconsignacion"
+                                               id  ="Pagonombreconsignacion"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">T.
+                                    Debito</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentatdebito"
+                                               id  ="Pagocuentatdebito"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombretdebito"
+                                               id  ="Pagonombretdebito"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">T.
+                                    Credito</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentatcredito"
+                                               id  ="Pagocuentatcredito"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombretcredito"
+                                               id  ="Pagonombretcredito"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Anticipo C X C</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentamayorvalor"
+                                               id  ="Pagocuentamayorvalor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombremayorvalor"
+                                               id  ="Pagonombremayorvalor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Anticipo C X P</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentasaldoafavor"
+                                               id  ="Pagocuentasaldoafavor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombresaldoafavor"
+                                               id  ="Pagonombresaldoafavor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <label class="col-sm-1 col-form-label">Ajustes</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagocuentamenorvalor"
+                                               id  ="Pagocuentamenorvalor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Pagonombremenorvalor"
+                                               id  ="Pagonombremenorvalor"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-12">
+                                    <a onclick="cerrarpanel();"
+                                       class="btn btn-outline-dark waves-effect btn-md float-right"
+                                       style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">Salir</a>
+                                    <button type="submit" id="guardar"
+                                            class="btn btn-outline-success waves-effect btn-md float-right"
+                                            style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="general" role="tabpanel"
+                             aria-labelledby="profile-tab">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Venta
+                                    19%</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Ventacuenta19"
+                                               id="Ventacuenta19"
+                                               class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                                <!--                            <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Ventanombre19"
+                                               id="Ventanombre19"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-12">
+                                    <a onclick="cerrarpanel();"
+                                       class="btn btn-outline-dark waves-effect btn-md float-right"
+                                       style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">Salir</a>
+                                    <button type="submit" id="guardar"
+                                            class="btn btn-outline-success waves-effect btn-md float-right"
+                                            style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="horizontal" role="tabpanel"
+                             aria-labelledby="profile-tab">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Inicial</label>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Phinicial"
+                                               id="Phinicial"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Aviso 1</label>
+                                <div class="col-sm-7">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="71"
+                                               name="Textoaviso1"
+                                               id="Textoaviso1"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Descuento 1</label>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="23"
+                                               name="Textodescuento1"
+                                               id="Textodescuento1"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Aviso 2</label>
+                                <div class="col-sm-7">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="71"
+                                               name="Textoaviso2"
+                                               id="Textoaviso2"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Descuento 2</label>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="23"
+                                               name="Textodescuento2"
+                                               id="Textodescuento2"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Aviso 3</label>
+                                <div class="col-sm-7">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="71"
+                                               name="Textoaviso3"
+                                               id="Textoaviso3"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Descuento 3</label>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="23"
+                                               name="Textodescuento3"
+                                               id="Textodescuento3"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Aviso 4</label>
+                                <div class="col-sm-7">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               minlength="1"
+                                               maxlength="71"
+                                               name="Textoaviso4"
+                                               id="Textoaviso4"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row mb-0">
+                                <div class="col-sm-12">
+                                    <a onclick="cerrarpanel();"
+                                       class="btn btn-outline-dark waves-effect btn-md float-right"
+                                       style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">Salir</a>
+                                    <button type="submit" id="guardar"
+                                            class="btn btn-outline-success waves-effect btn-md float-right"
+                                            style="width: 100px; height: 40px; font-size: 11px;  padding: 10px;">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<input id="CuentaNuevo"
+       type="hidden"/>
+<script>
+    function cerrarpanel() {
+        //alert("cerrarPanel");
+        var myCustomData = {
+            elementoPanel: "{{ .panel}}"
+        }
+        var event = new CustomEvent('myEvent', {detail: myCustomData})
+        window.parent.document.dispatchEvent(event)
+    }
+
+    $(document).ready(function () {
+        // INICIA COMPRA AUTOCOMPLETA
+        autocompletaPlandecuentaempresa("#Pagocuentaefectivo", "#Pagonombreefectivo");
+        autocompletaPlandecuentaempresa("#Pagocuentasaldoafavor", "#Pagonombresaldoafavor");
+        autocompletaPlandecuentaempresa("#Pagocuentatdebito", "#Pagonombretdebito");
+        autocompletaPlandecuentaempresa("#Pagocuentatcredito", "#Pagonombretcredito");
+        autocompletaPlandecuentaempresa("#Pagocuentaconsignacion", "#Pagonombreconsignacion");
+        autocompletaPlandecuentaempresa("#Pagocuentamayorvalor", "#Pagonombremayorvalor");
+        autocompletaPlandecuentaempresa("#Pagocuentamenorvalor", "#Pagonombremenorvalor");
+
+        // TERMINA COMPRA AUTOCOMPLETA
+
+        // INICIA COMPRA MASCARAS
+        $("#Pagocuentefectivo").mask('0000000000');
+        elemento = "#Compracuentabase";
+        // var cleave = new Cleave(elemento, {
+        //     numeral: true,
+        //     numeralThousandsGroupStyle: 'thousand'
+        // });
+
+        $("#Pagocuentaporcentajeretfte").mask('##.00', {reverse: true});
+        $("#Pagocuentaporcentajeretotra").mask('##.00', {reverse: true});
+        $("#Pagocuentaefectivo").focus();
+
+        // INICIA COMPRAS VALORES
+        $("#Pagocuentaefectivo").val("{{ .parametro.Pagocuentaefectivo}}");
+        $("#Pagonombreefectivo").val("{{ .parametro.Pagonombreefectivo}}");
+        $("#Pagocuentasaldoafavor").val("{{ .parametro.Pagocuentasaldoafavor}}");
+        $("#Pagonombresaldoafavor").val("{{ .parametro.Pagonombresaldoafavor}}");
+        $("#Pagocuentatdebito").val("{{ .parametro.Pagocuentatdebito}}");
+        $("#Pagonombretdebito").val("{{ .parametro.Pagonombretdebito}}");
+        $("#Pagocuentatcredito").val("{{ .parametro.Pagocuentatcredito}}");
+        $("#Pagonombretcredito").val("{{ .parametro.Pagonombretcredito}}");
+        $("#Pagocuentaconsignacion").val("{{ .parametro.Pagocuentaconsignacion}}");
+        $("#Pagonombreconsignacion").val("{{ .parametro.Pagonombreconsignacion}}");
+        $("#Pagocuentamayorvalor").val("{{ .parametro.Pagocuentamayorvalor}}");
+        $("#Pagonombremayorvalor").val("{{ .parametro.Pagonombremayorvalor}}");
+        $("#Pagocuentamenorvalor").val("{{ .parametro.Pagocuentamenorvalor}}");
+        $("#Pagonombremenorvalor").val("{{ .parametro.Pagonombremenorvalor}}");
+        $("#Phinicial").val("{{ .parametro.Phinicial}}");
+        $("#Textodescuento1").val("{{ .parametro.Textodescuento1}}");
+        $("#Textodescuento2").val("{{ .parametro.Textodescuento2}}");
+        $("#Textodescuento3").val("{{ .parametro.Textodescuento3}}");
+        $("#Textoaviso1").val("{{ .parametro.Textoaviso1}}");
+        $("#Textoaviso2").val("{{ .parametro.Textoaviso2}}");
+        $("#Textoaviso3").val("{{ .parametro.Textoaviso3}}");
+        $("#Textoaviso4").val("{{ .parametro.Textoaviso4}}");
+    });
+</script>
+{{template "autocompletaPlandecuentaempresa" }}
+{{end}}

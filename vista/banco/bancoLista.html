@@ -1,0 +1,662 @@
+{{define "body" }}
+
+<!--<link rel="stylesheet" href="{{ .hosting }}static/css/conciliacion.css"/>-->
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<script src="{{ .hosting }}static/js/cleave.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/datatable.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/tabla.css"/>
+<div class="container-fluid">
+    <section>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <br>
+                    <div class="form-group row mb-4 mt-0 ml-0">
+                        <h3 class="" style="color: white; background-color: #21B799;
+                     width: 300px; text-align: center; height:40px">
+                            Bancos</h3>
+                        <div class="col-sm-3"></div>
+                        <div id="areaBuscar">
+                        </div>
+                        <label class="col-sm-1 col-form-label">Buscar</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       name="Buscar"
+                                       id="Buscar"
+                                       class="form-control"
+                                       required/>
+                            </div>
+                        </div>
+                        <a id="pdf" style="height:40px; text-align: center; width:100px; margin-top: 0px; padding: 10px; margin-right: 10px; pxfont-size: 10; font-family: Arial"
+                           target="_blank" href="DocumentoTodosPdf"  class="btn btn-outline-danger waves-effect btn-md float-right">PDF
+
+                        </a>
+                        <a target="_blank" href="DocumentoExcel"  id="excel" style="height:40px; text-align: center; width:100px; margin-top: 0px; padding: 10px; margin-right: 10px; font-size: 10px; font-family: Arial "
+                           class="btn btn-outline-info waves-effect btn-md float-right " >
+                            EXCEL
+                        </a>
+                        <button type="button" id="actualizar1" style="height:40px; text-align: center; width:100px; margin-top: 0px; padding: 10px; margin-right: 10px; font-size: 10px; font-family: Arial"  onclick="guardar('Actualizar')"
+                                class="btn btn-outline-success waves-effect btn-md float-right" >
+                            Aceptar
+                        </button>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home"
+                             role="tabpanel" aria-labelledby="home-tab">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Document</label>
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <select name="Documento"
+                                                id="Documento"
+                                                class="mdb-select md-form-control"
+                                                searchable="Buscar...">
+                                            {{ range .documento }}
+                                            <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }} </option>
+                                            {{ end }}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--                                <label class="col-sm-1 col-form-label">Numero</label>-->
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Numero"
+                                               id="Numero"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Fecha</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               placeholder="DD/mm/YYYY"
+                                               name="Fecha"
+                                               id="Fecha"
+                                               class="form-control"
+                                               required/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">F. Pago</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               placeholder="DD/mm/YYYY"
+                                               name="Fechaconsignacion"
+                                               id="Fechaconsignacion"
+                                               class="form-control"
+                                               required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Nit. No.</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               id="terceroCodigo"
+                                               class="form-control text-left"/>
+                                    </div>
+                                </div>
+                                <!--                                <label class="col-sm-1 col-form-label">Nombre</label>-->
+                                <div class="col-sm-3">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               id="terceroNombre"
+                                               class="form-control"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Centro</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <select name="Centro"
+                                                id="Centro"
+                                                class=" mdb-select md-form-control"
+                                                searchable="Buscar...">
+                                            {{ range .centro }}
+                                            <option value="{{ .Codigo }}">{{ .Nombre }}
+                                            </option>
+                                            {{ end }}
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Total</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               name="Monto"
+                                               id="Monto"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Efectivo</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentaefectivo"
+                                            id="Cuentaefectivo"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuenta }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valorefectivo"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Transfer</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentatransferencia"
+                                            id="Cuentatransferencia"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuentabanco }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valortransferencia"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">T. Debito</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentatarjetadebito"
+                                            id="Cuentatarjetadebito"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuentabanco }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valortarjetadebito"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">T. Credito</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentatarjetacredito"
+                                            id="Cuentatarjetacredito"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuentabanco }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valortarjetacredito"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-1 col-form-label">Anticipos</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentasaldofavor"
+                                            id="Cuentasaldofavor"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuenta }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valorsaldofavor"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Ajuste</label>
+                                <div class="col-sm-3">
+                                    <select name="Cuentaajuste"
+                                            id="Cuentaajuste"
+                                            class=" mdb-select md-form-control"
+                                            searchable="Buscar...">
+                                        {{ range .cuenta }}
+                                        <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}</option>
+                                        {{ end }}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               value="0"
+                                               id="Valorajuste"
+                                               class="form-control text-right"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <table id="dt-all-checkbox"
+                                   class="table table-borderless table-striped table-sm"
+                                   cellspacing="0" width="100%">
+                                <thead style="color: white; background-color: #21B799">
+                                <tr>
+                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Factura</th>
+                                    <th>Neto</th>
+                                    <th>Saldo</th>
+                                    <th>Abono</th>
+                                    <th>Total</th>
+                                 </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<input id="terceroNuevo"
+       type="hidden"/>
+
+<input id="CuentaCliente"
+       type="hidden"/>
+<input id="CuentaProveedor"
+       type="hidden"/>
+
+
+{{template "bancoscript" }}
+{{template "autocompletaTercero" }}
+
+<script>
+    function totales(){
+        var totalMonto=0;
+        valorefectivo= limpiarformato($("#Valorefectivo" ).val());
+        valortransferencia= limpiarformato($("#Valortransferencia" ).val());
+        valortarjetadebito= limpiarformato($("#Valortarjetadebito" ).val());
+        valortarjetacredito= limpiarformato($("#Valortarjetacredito").val());
+        valorsaldofavor= limpiarformato($("#Valorsaldofavor").val());
+        // ajuste
+        valorajuste= limpiarformato($("#Valorajuste").val());
+
+        totalMonto=valorefectivo+valortransferencia+valortarjetadebito+valortarjetacredito+valorsaldofavor+valorajuste;
+        $("#Monto").val(formatoFloat(totalMonto));
+
+
+    }
+
+
+    numeroPanel = 1;
+    $(document).ready(function () {
+
+        // FOCUS
+        $("#terceroCodigo").focus();
+
+
+        // INICIA FECHA
+        var m = moment().format("YYYY-MM-DD");
+        $("#Fecha").val(m);
+        $("#Fechaconsignacion").val(m);
+
+
+        elemento = '#Monto';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+
+        elemento = '#Valorefectivo';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+
+        elemento = '#Valortransferencia';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+
+        elemento = '#Valortarjetadebito';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+        elemento = '#Valortarjetacredito';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+        // elemento = '#Valorcheque';
+        // var cleave = new Cleave(elemento, {
+        //     numeral: true,
+        //     numeralDecimalScale: 0
+        // });
+
+        elemento = '#Valorsaldofavor';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+
+        elemento = '#Valorajuste';
+        var cleave = new Cleave(elemento, {
+            numeral: true,
+            numeralDecimalScale: 0
+        });
+
+        $(document).on('focusout', elemento, function (e) {
+            totales();
+        });
+
+        // elemento = '#Acumulado';
+        // var cleave = new Cleave(elemento, {
+        //     numeral: true,
+        //     numeralDecimalScale: 0
+        // });
+
+
+
+
+        $( "#actualizar" ).click(function() {
+
+            Tercero=$("#terceroCodigo").val();
+
+            accion='BancoDatos/'+Tercero;
+
+            $.ajax({
+                url: accion,
+                dataType: "json",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $("#tabla > tbody").empty();for (var i=0; i<response.length; i++) {
+                        var fila=(i+1).toString();
+                    }
+                    console.log(JSON.stringify(response));
+                    datos(response);
+                }
+            })
+
+
+        });
+        $('.mdb-select').materialSelect({});
+        autocompletaTercero("#terceroCodigo" ,"#dv", "#terceroNombre");
+        $("#Cuentaefectivo").val("{{ .parametro.Pagocuentaefectivo}}");
+        $("#Cuentatarjetadebito").val("{{ .parametro.Pagocuentatdebito}}");
+        $("#Cuentatarjetacredito").val("{{ .parametro.Pagocuentatcredito}}");
+        $("#Cuentatransferencia").val("{{ .parametro.Pagocuentaconsignacion}}");
+        $("#Cuentasaldofavor").val("{{ .parametro.Pagocuentasaldoafavor}}");
+        $("#Cuentaajuste").val("{{ .parametro.Pagocuentamenorvalor}}");
+        $("#CuentaCliente").val("{{ .parametro.Pagocuentasaldoafavor}}");
+        $("#CuentaProveedor").val("{{ .parametro.Pagocuentamayorvalor}}");
+
+
+        $( "#Documento").change(function() {
+           // alert( "Handler for .change() called." + $( "#Documento").val());
+            if($("#Documento").val()=="1")
+            {
+                $("#Cuentasaldofavor").val( $("#CuentaCliente").val());
+            }
+            else{
+                $("#Cuentasaldofavor").val( $("#CuentaProveedor").val());
+            }
+        });
+
+
+
+
+
+
+    });
+    function datos(datosAjax)
+    {
+
+
+        $('#dt-all-checkbox').dataTable().fnDestroy();
+        var datatable1=   $('#dt-all-checkbox').dataTable({
+            "dom": 'lrtip',
+            "scrollY": "412px",
+            "scrollCollapse": true,
+            "scrollXInner": true,
+            "paging": false,
+            "aaData": datosAjax,
+            columns:
+                [{"data": "Fila"},
+                    {"data": "Fecha" },
+                    {"data": "Tipo"},
+                    {"data": "Factura"},
+                    {
+                        "data": "Neto",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Saldo",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Abono",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    },
+                    {
+                        "data": "Total",
+                        render: $.fn.dataTable.render.number(',', '.', 2, ''),
+                        className: "text-right"
+                    }
+                ],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox select-checkbox-all',
+                targets: 0
+            }],
+            "ordering" : false,
+            language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            }
+        });
+
+
+        $('#dt-all-checkbox').DataTable().on( 'select', function ( e, dt, type, indexes ) {
+            var rowData = dt.rows( indexes ).data().toArray();
+            var datatable2 = $('#dt-all-checkbox').DataTable();
+            var selectedRows = $('#dt-all-checkbox').DataTable().rows('.selected').data();
+
+            var rows = $('#dt-all-checkbox').DataTable().rows( { selected: true } ).indexes();
+            //alert(rows[0]);
+
+            totalMonto= limpiarformato($("#Monto" ).val());
+            var totalPago=0;
+            var totalDiferencia=0;
+            for(var i=0;i<selectedRows.length;i++){
+                saldo= (selectedRows[i].Saldo);
+                total= (selectedRows[i].Total);
+                var NuevoTotal=total;
+                var abono=0;
+                if(totalMonto>0)
+                {
+                    if(saldo<=(totalMonto))
+                    {
+                        NuevoTotal=0;
+                        totalMonto=totalMonto-saldo;
+                        abono=saldo;
+                    }
+                    else{
+                        if(saldo>=(totalMonto))
+                        {
+                            NuevoTotal=saldo-totalMonto;
+                            abono=totalMonto;
+                            totalMonto=0;
+
+                        }
+                    }
+                }
+                selectedRows.cell(rows[i], 6).data(abono);
+                selectedRows.cell(rows[i], 7).data(NuevoTotal);
+                Factura=selectedRows[i].Factura;
+                //alert(Factura);
+               // alert(selectedRows[i][0]);
+            }
+
+            // arregla las no seleccionadas
+            // var selectedRows1 = $('#dt-all-checkbox').DataTable().rows({selected:false}).data();
+            // for(var i=0;i<selectedRows1.length;i++){
+            //     //selectedRows[i].Abono=4444;
+            //     saldo= (selectedRows1[i].Saldo);
+            //     var abono=0;
+            //     datatable2.cell(i, 5).data(abono);
+            //     datatable2.cell(i, 6).data(saldo);
+            //    // Factura=selectedRows[i].Factura;
+            // }
+
+           ///datatable2.draw();
+            $("#Acumulado").val(formatoFloat(totalMonto));
+
+        } )
+            .on( 'deselect', function ( e, dt, type, indexes ) {
+                var rowData = dt.rows( indexes ).data().toArray();
+                var selectedRows = $('#dt-all-checkbox').DataTable().rows('.selected').data();
+                var datatable2 = $('#dt-all-checkbox').DataTable();
+                totalMonto= limpiarformato($("#Monto" ).val());
+                var rows = $('#dt-all-checkbox').DataTable().rows( { selected: true } ).indexes();
+                var rowsno = $('#dt-all-checkbox').DataTable().rows( { selected: false } ).indexes();
+
+                var totalPago=0;
+                var totalDiferencia=0;
+
+                // arregla las no seleccionadas
+                // arregla las no seleccionadas
+                var selectedRows1 = $('#dt-all-checkbox').DataTable().rows({selected:false}).data();
+                for(var i=0;i<selectedRows1.length;i++){
+                    //selectedRows[i].Abono=4444;
+                    saldo= (selectedRows1[i].Saldo);
+                    var abono=0;
+                    datatable2.cell(rowsno[i], 6).data(abono);
+                    datatable2.cell(rowsno[i], 7).data(saldo);
+                    //alert(selectedRows1[i].Factura);
+                    //Factura=selectedRows[i].Factura;
+                }
+
+                // las no seleccionadas
+                for(var i=0;i<selectedRows.length;i++){
+                    selectedRows[i].Abono=4444;
+                    saldo= (selectedRows[i].Saldo);
+                    total= (selectedRows[i].Total);
+                    var NuevoTotal=total;
+                    var abono=0;
+                    if(totalMonto>0)
+                    {
+                        if(saldo<=(totalMonto))
+                        {
+                            NuevoTotal=0;
+                            totalMonto=totalMonto-saldo;
+                            abono=saldo;
+                        }
+                        else{
+                            if(saldo>=(totalMonto))
+                            {
+                                NuevoTotal=saldo-totalMonto;
+                                abono=totalMonto;
+                                totalMonto=0;
+
+                            }
+                        }
+                    }
+                    datatable2.cell(rows[i], 6).data(abono);
+                    datatable2.cell(rows[i], 7).data(NuevoTotal);
+                    //Factura=selectedRows[i].Factura;
+                }
+                // arregla
+               // datatable2.draw();
+                $("#Acumulado").val(formatoFloat(totalMonto));
+
+            } );
+        //$('#dt-all-checkbox').DataTable();
+
+        $('#dt-all-checkbox_wrapper').find('label').each(function () {
+            $(this).parent().append($(this).children());
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('input').each(function () {
+            const $this = $(this);
+            $this.attr("placeholder", "Buscar");
+            $this.removeClass('form-control-sm');
+        });
+        $('#dt-all-checkbox_wrapper .dataTables_length').addClass('d-flex flex-row');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').addClass('md-form');
+        $('#dt-all-checkbox_wrapper select').removeClass('custom-select custom-select-sm form-control form-control-sm');
+        $('#dt-all-checkbox_wrapper select').addClass('mdb-select');
+        $('#dt-all-checkbox_wrapper .dataTables_filter').find('label').remove();
+
+    }
+
+</script>
+
+{{end}}

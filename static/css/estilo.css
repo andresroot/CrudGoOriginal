@@ -1,0 +1,55 @@
+body {
+        font-weight: 500 !important;
+
+    background: #bababa;
+
+
+}
+
+.single-page {
+    background-color: #ffffff !important;
+}
+.card, .navbar, .pagination .page-item.active .page-link .page-link {
+    box-shadow: none !important;
+        font-weight: 500 !important;
+}
+
+.navbar .dropdown-menu a {
+  font-weight: 500 !important;
+}
+
+.card {
+
+   background-color: transparent !important;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.card .card-body h1, .card .card-body h2, .card .card-body h3, .card .card-body h4, .card .card-body h5, .card .card-body h6 {
+     font-weight: 300 !important;
+}
+
+.btn-outline-dark {
+    color: #21B799!important;
+    background-color: white!important;
+    border: 2px solid white!important;
+    border-radius: 0px;
+}
+
+.btn-outline-success {
+    color: white!important;
+    background-color: #21B799!important;
+    border: 2px solid  #21B799!important;
+    border-radius: 0px;
+}
+
+.md-form input[type=text]:not(.browser-default){
+   border-bottom: 0px solid #ced4da!important;
+
+}

@@ -1,0 +1,337 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/comprobante.css"/>
+<script type="text/javascript"
+        src="{{ .hosting }}static/js/jspanel.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/jspanel.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<script src="{{ .hosting }}static/js/cleave.js"></script>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <!--             INICIA AVISO CODIGO YA EXISTE-->
+        <div class="form-group row mb-0">
+            <div class="col-sm-3">
+                <div class="md-form mt-0">
+                    <div id="aviso"
+                         class="alert alert-success alert-dismissible"
+                         role="alert">
+                        <p id="textoaviso">Cargando...</p>
+                        <button
+                                type="button"
+                                class="close"
+                                data-dismiss="alert"
+                                aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--            TERMINA AVISO CODIGO YA EXISTE-->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="" style="color: white; background-color: #21B799; width: 270px; text-align: center; border-radius: 3px">Nuevo Comprobante</h3>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home"
+                         role="tabpanel" aria-labelledby="home-tab">
+                        <form id="formulario" method="POST"
+                              action="/ComprobanteAgregar">
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-2 col-form-label">Comprobante
+                                    No.</label>
+                                <div class="col-sm-4">
+                                    <div class="md-form mt-0">
+                                        <select name="Documento"
+                                                id="Documento"
+                                                class=" mdb-select md-form-control"
+                                                searchable="Buscar...">
+                                            {{ range .documento }}
+                                            <option value="{{ .Codigo }}">{{ .Codigo }} - {{ .Nombre }}
+                                            </option>
+                                            {{ end }}
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Cuenta</label>
+                                <div class="col-sm-5">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Cuenta"
+                                               id="Cuenta"
+                                               class="form-control" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-2 col-form-label">Numero
+                                    Documento</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Numero"
+                                               id="Numero"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                </div>
+                                <label class="col-sm-1 col-form-label">Tercero</label>
+                                <div class="col-sm-5">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Tercero"
+                                               id="Tercero"
+                                               class="form-control" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-2 col-form-label">Fecha
+                                    Documento</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               placeholder="DD/mm/YYYY"
+                                               name="Fecha"
+                                               id="Fecha"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                </div>
+                                <label class="col-sm-1 col-form-label">Centro</label>
+                                <div class="col-sm-5">
+                                    <div class="md-form mt-0">
+                                        <input type="text"
+                                               name="Centro"
+                                               id="Centro"
+                                               class="form-control" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-sm-2 col-form-label">Fecha
+                                    Consignacion</label>
+                                <div class="col-sm-2">
+                                    <div class="md-form mt-0">
+                                        <input type="Date"
+                                               name="Fechaconsignacion"
+                                               id="Fechaconsignacion"
+                                               class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row mb-0">
+                                <table id="tabla"
+                                       class="table table-borderless table-sm"
+                                       cellspacing="0" width="100%">
+                                    <thead class="border black-text">
+                                    <tr style="color: white;background-color: #21B799; height: 35px">
+                                        <th style="color: white;background-color: #21B799; height: 35px"></th>
+                                        <th ></th>
+                                        <th >No</th>
+                                        <th >Cuenta</th>
+                                        <th >Tercero</th>
+                                        <th >Centro</th>
+                                        <th >Concepto</th>
+                                        <th >Documento</th>
+                                        <th style="text-align: center">Debito</th>
+                                        <th style="text-align: center">Credito</th>
+                                        <th ></th>
+                                        <th ></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr >
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr >
+                                        <td></td>
+                                        <td></td>
+                                        <td><input style="width:50px"type="text"
+                                                   id="Items"
+                                                   class="inputItem"/></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="mt-5">Totales</td>
+                                        <td><input style="width: 150px" type="text"
+                                                   class="inputNumero" id="TotalDebito"  /></td>
+                                        <td><input style="width: 150px" type="text"
+                                                   id="TotalCredito"
+                                                   class="inputNumero"/></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><input style="width: 150px;color:#E74C3C"
+                                                   type="text" class="inputNumero"
+                                                   id="DiferenciaDebito" /></td>
+                                        <td>
+                                            <input style="width: 150px;color: #E74C3C" type="text"
+                                                   id="DiferenciaCredito"
+                                                   class="inputNumero"/>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                           </div>
+                            <br>
+                                 <div class="form-group row mb-0">
+                                 <div class="col-sm-12">
+                                    <a href="/ComprobanteLista"
+                                       class="btn btn-outline-dark waves-effect
+                                        btn-md float-right">Cancelar </a>
+                                    <button type="button"
+                                            onclick="guardar('Nuevo')"
+                                            class="btn btn-outline-success
+                                            waves-effect btn-md float-right">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--   INICIA NUEVO TERCERO-->
+<input id="TerceroNuevo"
+       type="hidden"/>
+<input id="CuentaNuevo"
+       type="hidden"/>
+<input id="CentroNuevo"
+       type="hidden"/>
+<script src="{{ .hosting }}static/js/comprobante.js"></script>
+<!--    TERMINA NUEVO TERCERO-->
+
+<!--   INICIA TEMPLATE-->
+{{template "comprobantescript" }}
+{{template "autocompletaPlandecuentaempresa" }}
+{{template "autocompletaTercero" }}
+{{template "autocompletaCentro" }}
+
+<script>
+    $(document).ready(function () {
+        // INICIA CREAR LINEA
+        agregar();
+        // TERMINA CREAR LINEA
+
+        // INICIA MASCARA
+        $("#Subtotal").mask('000.000.000.000.000.00', {reverse: true});
+        // TERMINA MASCARA
+        $("#DiferenciaDebito").hide();
+        $("#DiferenciaCredito").hide();
+        // INICIA FECHA
+        var m = moment().format("YYYY-MM-DD");
+        $("#Fecha").val(m);
+        $("#Fechaconsignacion").val(m);
+        // TERMINA FECHA
+
+        // INICIA CODIGO  YA EXISTE
+        $("#Documento").focus();
+        $("#aviso").hide();
+        $("#guardar").prop("disabled", false);
+        $("#guardar").prop("disabled", true);
+        $("#Numero").keyup(function () {
+            numero = $("#Numero").val().replace(" ", "_").toUpperCase();
+            $("#Numero").val(numero);
+            if ($("#Numero").val().length > 0) {
+                console.log("Handler for .keyup() called." + $("#Numero").val());
+                $.ajax({
+                    url: "/ComprobanteExiste/" + $("#Documento").val() + "/" + $("#Numero").val(),
+                    type: "GET",
+                    dataType: "json",
+                    async: false,
+                    success: function (respuesta) {
+                        if (respuesta.result == true) {
+                            console.log(respuesta.result);
+                            $("#textoaviso").html("El Numero Ya Existe");
+                            $("#aviso").show();
+                            $("#guardar").prop("disabled", true);
+                        } else {
+                            console.log(respuesta.result);
+                            $("#aviso").hide();
+                            $("#guardar").prop("disabled", false);
+                        }
+                    },
+                });
+            }
+        });
+        // TERMINA CODIGO YA EXISTE
+
+        // INICIA FOCUS
+        $('#Numero').focus();
+        // TERMINA FOCUS
+
+        // INICIA SELECT
+        $('#Documento').materialSelect({});
+
+        // TERMINA SELECT
+
+        // TRAE DATOS DE DOCUMENTO COPIADO
+        if("False"== "{{ .documentoparametro}}")
+        {
+
+        }else{
+            //INICIA DATOS INICIALES
+            $("#Documento").val('{{ .comprobante.Documento }}');
+           // $("#Numero").val('{{ .comprobante.Numero }}');
+            $("#Fecha").val('{{ .comprobante.Fecha.Format "2006-01-02"}}');
+            $("#Fechaconsignacion").val('{{ .comprobante.Fechaconsignacion.Format "2006-01-02"}}');
+            $('#Numero').focus();
+
+            // llenar detalle
+            cont = 1;
+            {{range.detalle }}
+            agregar();
+            $('#seleccion_cuenta' + cont).val('{{ .Cuenta }}');
+            $('#seleccion_tercero' + cont).val('{{ .Tercero }}');
+            $('#seleccion_centro' + cont).val('{{ .Centro }}');
+            $('#concepto' + cont).val('{{ .Concepto }}');
+            $('#factura' + cont).val('{{ .Factura }}');
+            $('#Debito' + cont).val(formatomoneda('{{ .Debito }}'));
+            $('#Credito' + cont).val(formatomoneda('{{ .Credito }}'));
+            nombreCuenta('{{ .Cuenta }}', "#Cuenta");
+            nombreTercero('{{ .Tercero }}', "#Tercero");
+            nombreCentro('{{ .Centro }}', "#Centro");
+            cont++;
+            {{end}}
+
+            totales();
+
+        }
+
+    });
+</script>
+
+{{end}}

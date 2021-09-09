@@ -1,0 +1,194 @@
+{{define "body" }}
+<link rel="stylesheet" href="{{ .hosting }}static/css/formulario.css"/>
+<script type="text/javascript"
+        src="{{ .hosting }}static/js/jspanel.js"></script>
+<link rel="stylesheet" href="{{ .hosting }}static/css/jspanel.css"/>
+<link rel="stylesheet" href="{{ .hosting }}static/css/autocomplete.css"/>
+<script src="{{ .hosting }}static/js/jquery-ui.js"></script>
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <h3 class="" style="color: white; background-color: #21B799;
+                     width: 300px; text-align: center; border-radius: 1px">Editar Producto</h3>
+                <br>
+                <form id="formulario" method="POST"
+                      action="/ProductoEliminar/{{ .emp.Codigo }}">
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-1 col-form-label">Codigo</label>
+                        <div class="col-sm-3">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Codigo }}"
+                                       name="Codigo"
+                                       id="Codigo"
+                                       class="form-control"
+                                       readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Nombre</label>
+                        <div class="col-sm-5">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Nombre }}"
+                                       name="Nombre"
+                                       id="Nombre"
+                                       class="form-control"
+                                       readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Iva
+                            %</label>
+                        <div class="col-sm-1">
+                            <select name="Iva"
+                                    id="Iva"
+                                    class=" mdb-select md-form-control"
+                                    disabled>
+                                <option value="19">19</option>
+                                <option value="5">5</option>
+                                <option value="0">0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-1 col-form-label">Unidad</label>
+                        <div class="col-sm-3">
+                            <div class="md-form mt-0">
+                                <select name="Unidad"
+                                        id="Unidad"
+                                        class=" mdb-select md-form-control"
+                                        disabled>
+                                    {{ range .unidaddemedida }}
+                                    <option value="{{ .Codigo }}">{{.Codigo}}-{{.Nombre }}
+                                    </option>
+                                    {{ end }}
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">SubGrupo</label>
+                        <div class="col-sm-3">
+                            <div class="md-form mt-0">
+                                <select name="Subgrupo"
+                                        id="Subgrupo"
+                                        class=" mdb-select md-form-control"
+                                        disabled>
+                                    {{ range .subgrupo }}
+                                    <option value="{{ .Codigo }}">{{.Codigo }}-{{.Nombre }}
+                                    </option>
+                                    {{ end }}
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Tipo
+                            Producto</label>
+                        <div class="col-sm-3">
+                            <div class="md-form mt-0">
+                                <select name="Tipo"
+                                        id="Tipo"
+                                        class=" mdb-select md-form-control"
+                                        disabled>
+                                    <option value="Producto">
+                                        Producto
+                                    </option>
+                                    <option value="Kit">
+                                        Kit
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <label class="col-sm-1 col-form-label">Precio
+                            Venta</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Precio }}"
+                                       name="Precio"
+                                       id="Precio"
+                                       maxlength="12"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Costo
+                            Venta</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Costo }}"
+                                       name="Costo"
+                                       id="Costo"
+                                       maxlength="12"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Cantidad</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Cantidad }}"
+                                       name="Cantidad"
+                                       id="Cantidad"
+                                       maxlength="12"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 col-form-label">Total</label>
+                        <div class="col-sm-2">
+                            <div class="md-form mt-0">
+                                <input type="text"
+                                       value="{{ .emp.Total }}"
+                                       name="Total"
+                                       id="Total"
+                                       maxlength="12"
+                                       class="form-control" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group row mb-0">
+                        <div class="col-sm-12">
+                            <a onclick="window.history.go(-1); return false;"
+                               class="btn btn-outline-dark waves-effect btn-md float-right">Cancelar </a>
+                            <button type="submit" id="guardar"
+                                    class="btn btn-outline-success waves-effect btn-md float-right">
+                                Borrarr
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //INICIA MASCARAS
+        $("#Codigo").mask('000000000000000');
+        $("#Precio").mask('000.000.000.000', {reverse: true});
+        $("#Costo").mask('000.000.000.000', {reverse: true});
+        $("#Cantidad").mask('000.000.000.000', {reverse: true});
+        $("#Total").mask('000.000.000.000', {reverse: true});
+        //TERMINA MASCARAS
+
+        //INICIA FOCUS
+        $('#Nombre').focus();
+        //TERMINA FOCUS
+
+        //INICIA SELECT
+        $('.mdb-select').materialSelect({});
+        //TERMINA SELECT
+
+        //INICIA DATOS INICIALES
+        $('#Tipo').val("{{ .emp.Tipo }}");
+        $('#Unidad').val("{{ .emp.Unidad }}");
+        $('#Subgrupo').val("{{ .emp.Subgrupo }}");
+        //TERMINA DATOS INICIALES
+
+    });
+
+</script>
+
+{{end}}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/bitly/go-simplejson" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/dustin/go-humanize" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/gorilla/mux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/gorilla/schema" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/jmoiron/sqlx" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/jung-kurt/gofpdf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/lib/pq" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/mohae/deepcopy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/richardlehane/mscfb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/richardlehane/msoleps" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/github.com/xuri/efp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/golang.org/x/crypto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/pkg/Go/src/golang.org/x/text" vcs="Git" />
+  </component>
+</project>

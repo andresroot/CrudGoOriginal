@@ -1,0 +1,14 @@
+.pink-skin .navbar {
+    color: #fff !important;
+    background-color: #3e3e3e !important;
+}
+
+
+.pink-skin .side-nav .sidenav-bg.mask-strong:after, .pink-skin .side-nav .sidenav-bg:after {
+    background:#3e3e3e !important;
+}
+
+.side-nav .collapsible a {
+    font-size: .8rem !important;
+    font-weight: 400 !important;
+}
